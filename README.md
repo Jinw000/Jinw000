@@ -8,3 +8,4 @@
 </div>
 
 [![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=sjw030729)](https://solved.ac/sjw030729/)
+![mazandi profile](http://mazandi.herokuapp.com/api?handle=sjw030729&theme=dark)
