@@ -1,0 +1,8 @@
+git int  ///initialize 초기 세팅, 정확한 경로에서 프로젝트 시작 전 1회 입력 (.git 숨긴 폴더 생성)
+git add 파일명 ///저장할 파일 지정, 모든 변경 사항 저장이 필요할 때는 git add .
+git commit -m "메세지 작성" ///실제로 저장하는 명령어
+git status ///저장 여부 확인, 저장 안된 파일 붉은색 표시 / 저장 안된 파일 없을 시 nothing to commit
+git log ///저장 내역 확인, 빠져나오기 q
+git push ///코드 github에 올리기
+git clone github 주소 . ///github 코드 복사해오기, 주소 뒤에 점(.) 하기
+git pull ///다른 사람이 변경한 코드 가져오기
