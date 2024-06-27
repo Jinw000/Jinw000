@@ -1,0 +1,85 @@
+from flask import Flask, render_template,  request
+import random
+import requests as rq
+app = Flask(__name__)
+
+
+@app.route('/')
+def home():
+    name = '손진우'
+    lotto = [1, 2, 3, 4, 5, 6]
+
+    def generate_lotto_numbers():
+        return random.sample(range(1, 46), 6)
+
+    random_lotto = generate_lotto_numbers()
+
+    def count_identical_elements(list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+
+        # Find the intersection of the two sets
+        common_elements = set1.intersection(set2)
+
+        # Return the number of identical elements
+        return len(common_elements)
+
+    # Count the number of identical elements
+    num_identical_elements = count_identical_elements(lotto, random_lotto)
+
+    context = {
+        "name": name,
+        "lotto": lotto,
+        "random_lotto": random_lotto,
+        "num_identical_elements": num_identical_elements,
+    }
+    return render_template('index.html', data=context)
+
+@app.route('/mypage')
+def mypage():
+    return "This is mypage"
+
+@app.route('/movie')
+def movie():
+    query = request.args.get('query')
+    URL = f"http://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&movieNm={query}"
+    
+    res = rq.get(URL)
+    rjson = res.json()
+    movie_list = rjson["movieListResult"]["movieList"]
+    
+    return render_template('movie.html', data=movie_list)
+
+@app.route("/answer")
+def answer():
+
+    if request.args.get('query'):
+        query = request.args.get('query')
+    else:
+        query = '20230601'    
+
+    URL = f"http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt={query}"
+
+    res = rq.get(URL)             
+
+    rjson = res.json()
+    movie_list = rjson.get("boxOfficeResult").get("weeklyBoxOfficeList")
+
+    return render_template("answer.html", data=movie_list)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+soup = BeautifulSoup(html , 'lxml')
+print(soup.select('a')) # a 태그
+print(soup.select('a.cc')) # cc 클래스를가지는a 태그
+print(soup.select('.cc')) # cc 클래스를가지는태그
+print(soup.select('a > b')) # a 태그의자식인b 태그
+print(soup.select('a > c')) # a 태그의자식인c 태그
+print(soup.select('a > b > c')) # a 태그의자식인b 태그인자식인c 태그
+print(soup.select('a c')) # a 태그의후손이c 태그
+print(soup.select('a#ii')) # id가ii인a 태그
+print(soup.select('#ii')) # id가ii인태그
+print(soup.select('a.cc > b.ccc')) # cc 클래스인a태그의자식인ccc 클래스인b 태그
+print(soup.select('c[href=hh]')) # href속성값이hh인c 태그
+print(soup.select('[href=hh]')) # href속성값이hh인태그
