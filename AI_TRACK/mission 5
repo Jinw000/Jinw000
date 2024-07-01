@@ -1,0 +1,27 @@
+- GET : 데이터 정보 요청
+- POST : 데이터 생성 요청
+- PUT : 데이터 수정 요청
+- DELETE : 데이터 삭제 요청
+
+
+데카르트 곱
+
+from itertools import product
+
+sample1 = ["A", "B", "C", "D", "E"]
+sample2 = [1, 2, 3, 4]
+
+# 행 / 열을 구분하여 프린트 하기 위해 enumerate 사용
+for i, v in enumerate(product(sample1, sample2), 1):
+    print(v, end=" ")
+    if i % len(sample2) == 0:
+        print("")
+
+# result output
+"""
+('A', 1) ('A', 2) ('A', 3) ('A', 4) 
+('B', 1) ('B', 2) ('B', 3) ('B', 4) 
+('C', 1) ('C', 2) ('C', 3) ('C', 4) 
+('D', 1) ('D', 2) ('D', 3) ('D', 4) 
+('E', 1) ('E', 2) ('E', 3) ('E', 4) 
+"""
