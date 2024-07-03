@@ -1,0 +1,82 @@
+# class에 __init__메소드를 사용할 경우 인스턴스 생성 시 해당 메소드가 실행된다.
+class CookieFrame():
+    def __init__(self, name):
+        print(f"생성 된 과자의 이름은 {name} 입니다!")
+        self.name = name
+
+cookie1 = CookieFrame("cookie1") # 생성 된 과자의 이름은 cookie1 입니다!
+cookie2 = CookieFrame("cookie2") # 생성 된 과자의 이름은 cookie2 입니다!
+
+
+from pprint import pprint
+import glob
+
+# ./는 현재 python 파일이 위치한 경로를 의미합니다.
+# *은 "모든 문자가 일치한다" 라는 의미를 가지고 있습니다.
+# ./venv/*은 venv 폴더 내 모든 파일들을 의미합니다.
+path = glob.glob("./venv/*")
+pprint(path)
+
+# result output
+"""
+['./venv\\Include', './venv\\Lib', './venv\\pyvenv.cfg', './venv\\Scripts']
+"""
+
+# **은 해당 경로 하위 모든 파일을 의미하며, recursive 플래그와 같이 사용합니다.
+# recursive를 True로 설정하면 디렉토리 내부의 파일들을 재귀적으로 탐색합니다.
+path = glob.glob("./venv/**", recursive=True)
+pprint(path)
+
+# result output
+"""
+['./venv\\',
+ './venv\\Include',
+ './venv\\Lib',
+ './venv\\Lib\\site-packages',
+ './venv\\Lib\\site-packages\\autopep8-2.0.1.dist-info',
+ ...
+]
+"""
+
+# *.py와 같이 작성 시 특정 확장자를 가진 파일들만 볼 수 있습니다.
+# ./venv/**/*.py는 venv 하위 모든 폴더들을 재귀적으로 탐색하며 .py 확장자 파일을 탐색합니다.
+path = glob.glob("./venv/**/*.py", recursive=True)
+pprint(path)
+
+# result output
+"""
+['./venv\\Lib\\site-packages\\autopep8.py',
+ './venv\\Lib\\site-packages\\pycodestyle.py',
+ './venv\\Lib\\site-packages\\pip\\__init__.py',
+ './venv\\Lib\\site-packages\\pip\\__main__.py',
+ './venv\\Lib\\site-packages\\pip\\__pip-runner__.py',
+ ...
+]
+"""
+
+# 입력받은 인자에 2를 곱해주기
+def double_number(func):
+    def wrapper(a, b):
+        # 함수에서 받은 인자에 2를 곱해줍니다.
+        double_a = a * 2
+        double_b = b * 2
+
+        return func(double_a, double_b)
+
+    return wrapper
+
+@double_number
+def double_number_add(a, b):
+    return a + b
+
+def add(a, b):
+    return a + b
+
+print(double_number_add(5, 10))
+print(add(5, 10))
+
+# result output
+"""
+30
+15
+"""
