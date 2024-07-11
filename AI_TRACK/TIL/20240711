@@ -10,3 +10,14 @@ def solution(k, score):
 
 #1 함수 입력시 변수 지정 필요없음
 #2 .remove로 리스트 내 element 제거 가능
+
+
+SELECT USER_ID, PRODUCT_ID
+FROM ONLINE_SALE
+GROUP BY USER_ID, PRODUCT_ID
+HAVING COUNT(*) >= 2
+ORDER BY USER_ID, PRODUCT_ID DESC;
+
+#3 17번째 줄 해석 유심하기
+#4 18번째 줄 group by 한후 갯수가 2개인것
+#5 ASC 오름차순(생략가능) , DESC 내림차순
