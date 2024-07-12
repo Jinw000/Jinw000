@@ -1,0 +1,37 @@
+for test_case in range(1, 11):
+    T = int(input())
+    matrix = []
+    for _ in range(100):
+        row = list(map(int, input().split()))
+        matrix.append(row)
+    break2 = True
+
+    for i in range(100):
+        x = 0
+        ans = i
+        while True:
+            if x < 99 and matrix[x][i] == 1:
+                if i > 0 and matrix[x][i-1] == 1:
+                    while matrix[x][i-1] == 0:
+                        i -= 1
+                    x += 1
+                    if matrix[x][i] == 2:
+                        print(f"#{T} {ans}")
+                        break2 = False
+                        break
+                elif i < 99 and matrix[x][i+1] == 1:
+                    while matrix[x][i+1] == 0:
+                        i += 1
+                    x += 1
+                    if matrix[x][i] == 2:
+                        print(f"#{T} {ans}")
+                        break2 = False
+                        break
+                else:
+                    x += 1
+            elif matrix[x][i] == 2:
+                print(f"#{T} {ans}")
+                break
+        if break2 == False:
+            break
+#모르는 부분 내일 질문하기
