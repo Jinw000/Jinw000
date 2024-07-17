@@ -1,0 +1,51 @@
+dr_dc = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+
+def is_wall(r, c):
+    if r < 0 or r > 99 or c < 0 or c > 99:
+        return True
+    return False
+
+
+def bfs(start, end):
+    queue.append(start)
+    cnt = 0
+    er, ec = end
+    while queue:
+        now = queue.pop(0)
+        nr, nc = now
+        matrix[nr][nc] = -1
+
+        for dr, dc in dr_dc:
+            tr, tc = nr + dr, nc + dc
+            if tr == er and tc == ec:
+                return 1
+            if not is_wall(tr, tc) and not matrix[tr][tc]:
+                queue.append([tr, tc])
+    return 0
+
+
+for test in range(1, 11):
+    test_case = int(input())
+    matrix = []
+    start, end = [], []
+    for i in range(100):
+        temp = []
+        cnt = 0
+        for j in input():
+            temp.append(int(j))
+            if int(j) == 2:
+                start = [i, cnt]
+            if int(j) == 3:
+                end = [i, cnt]
+            cnt += 1
+        matrix.append(temp)
+
+    queue = []
+
+    print(f"#{test_case} {bfs(start, end)}")
+
+
+
+오늘 한일 bfs 구현 dfs 구현해보기
+내가 한 방식은 한번마다 pop을 해주기 때문에 넓이 위주의 bfs 이다 dfs로 바꾸기 위해서는 리턴해주는 방법을 찾거나 재귀 함수를 사용하여야 한다.
