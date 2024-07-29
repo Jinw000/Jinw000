@@ -1,0 +1,29 @@
+today is my brithday
+
+cpp
+변수, 함수 ,클래스에 타입 정의
+int 정수형
+float 실수형
+string 문자열
+double 확장실수형
+bool 논리형
+
+#include <iostream>
+
+// using namespace std;
+
+int main(void)
+{
+  std::cout << "하이하이" << std::endl;
+
+  int number = 0;
+  char one = "A";
+
+  std::cout << number << one << std::endl;
+  for(int i=10; i>0; i--)
+  {
+
+  }
+  return 0
+}
+
