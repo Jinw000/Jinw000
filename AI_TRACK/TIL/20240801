@@ -1,0 +1,42 @@
+dr_dc = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+def move(board, x, y, dr, dc):
+    cnt = 0
+    while board[x + dr][y + dc] != "#" and board[x + dr][y + dc] != "O":
+        x += dr
+        y += dc
+        cnt += 1
+    return x, y, cnt
+
+def solution():
+    queue = []
+    visited = set()
+    rx, ry, bx, by = 0
+    
+    for i in range(N):
+        for j in range(M):
+            if board[i][j] == "R":
+                rx, ry = j, i
+            elif board[i][j] == "B":
+                bx, by = j, i
+    
+    queue.append((rx, ry, bx, by, 0))
+    visited.add((rx, ry, bx, by))
+    
+    while queue:
+        rx, ry, bx, by, level = queue.pop(0)
+        if level >= 10:
+            break
+        
+        for dr, dc in dr_dc:
+            nrr, nrc, r_move = move(board, rx, ry, dr, dc)
+            nbr, nbc, b_move = move(board, rx, ry, dr, dc)
+            
+            if board[nbr][nbc] == "O":
+                continue
+            if board[nrr][nrc] == "O":
+                return level + 1
+N, M = map(int, input().split())
+board = [list(input()) for _ in range(N)]
+
+미완성 코드
