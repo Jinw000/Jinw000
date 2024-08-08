@@ -1,0 +1,27 @@
+def solution(x, y, n):
+    answer = 0
+    distinct_queue = set() # BFS방식으로 문제를 다룸. set을 통해 중복을 없애 백트래킹(i+n이 i *2랑 같아지는 경우들이나 나중에 큐에 이미 들어간 것 등)
+    distinct_queue.add(x)
+
+    #연산 중 y보다 큰 연산이 나오면 큐가 비어지기 시작함.
+    while distinct_queue:
+        # 연산 중인 것이 담긴 큐에서 y와 같은것이 있다면 그 즉시 나옴.
+        if y in distinct_queue:
+            return answer
+
+        next_node = set() #카운트 한번 하는 것을 구분하기 위해 다음 큐를 저장하는 변수
+        for i in distinct_queue:
+            if i + n <= y:
+                next_node.add(i + n)
+            if i * 2 <= y:
+                next_node.add(i * 2)
+            if i * 3 <= y:
+                next_node.add(i * 3)
+        distinct_queue = next_node
+        
+        #더하든 곱하든 값이 같으면 한번만 더하면 되기 때문에 조사를 다 한 후 증가
+        answer += 1
+
+    return -1
+
+print(solution(1, 1000000, 1))
