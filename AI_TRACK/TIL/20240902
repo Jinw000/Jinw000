@@ -1,0 +1,83 @@
+from django.db import models
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=50)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+    
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user_authentication = authenticate(request, username=username, password=password)
+        
+        if user_authentication is not None:
+            login(request, user_authentication)
+            return redirect('home')
+        else:
+            messages.error(request, '실패')
+            return redirect('login')
+    
+    return render(request, 'login.html')
+
+
+def post_list(request):
+	posts = Post.objects.all()
+	context = {'posts': posts}
+	return render(request, 'posts/index.html', context)
+
+from django.shortcuts import render, redirect
+from .forms import PostForm
+
+
+from django.shortcuts import render, redirect
+from .forms import PostForm
+
+def post_create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('post_list')
+    else:
+        form = PostForm()
+    return render(request, 'posts/form.html', {'form': form})
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import PostForm
+from .models import Post
+
+def post_update(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_list')
+    else:
+        form = PostForm(instance=post)
+    context = {
+    'form': form,
+    }
+    return render(request, 'posts/form.html', context)
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Post
+
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('post_list')
+    return render(request, 'posts/confirm_delete.html', {'post': post})
